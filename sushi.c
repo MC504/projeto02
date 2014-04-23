@@ -20,10 +20,8 @@
 
 void insert_client(int client_id);
 void remove_client(int client_id);
-
 void display_table(int client_id);
-int choose_position(int i, int st); 
-int verify_state(int i, int c_sitting);
+void verify_state(int i, int c_sitting);
 
 pthread_t customers[NO_OF_CUSTOMERS];
 
@@ -38,7 +36,7 @@ int must_wait = 0;
 typedef enum {W, S, E, L, O} state_t;
 state_t state[NO_OF_CUSTOMERS];
 
-int active[NO_OF_CUSTOMERS]; /*vetor de active x dos clientes/sushis*/ //PETER
+int active[NO_OF_CUSTOMERS];
 
 
 void* sushi_bar(void* arg) { 
@@ -145,7 +143,7 @@ int main() {
 
 void display_table(int client_id) {
 
-	int i, j, found = 0, sitting = 0, eating = 0, leaving = 0;
+	int j, sitting = 0, eating = 0;
 
 	system("clear"); /* limpa a tela */
 
@@ -193,7 +191,7 @@ void insert_client(int client_id) {
 	int i;  
 
 	if(eating == 1) {
-		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
+
 		for(i=0; i<NO_OF_CUSTOMERS; i++) {
 			usleep(TIMER);
 			display_table(client_id); 
@@ -201,7 +199,7 @@ void insert_client(int client_id) {
 		active[client_id] = 1;
 	}
 	else {
-		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
+		
 		for(i=0; i<(NO_OF_CUSTOMERS); i++) {
 			usleep(TIMER);
 			display_table(client_id); 
@@ -247,7 +245,7 @@ void remove_client(int client_id) {
 	}
 }
 
-int verify_state(int i, int c_sitting) {
+void verify_state(int i, int c_sitting) {
 	if(state[i]==E || state[i+5]==E || state[i+10]==E || state[i+15]==E){
 		printf("@|o/  ||  CLIENTE COMENDO");
 	}else if(state[i]==S || state[i+5]==S || state[i+10]==S || state[i+15]==S){
