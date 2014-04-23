@@ -238,38 +238,73 @@ void display_table(int client_id) {
 
 	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
 	printf("	|          ");
-	choose_position(0,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
-	choose_position(0,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
-	choose_position(0,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
-	( !choose_position(0,E) && client_eating()  && !choose_position(0,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
+	if(choose_position(0,E)){
+		printf("@|o/  ||  CLIENTE COMENDO");
+	} else if(choose_position(0,S)){
+		printf(" |  <<  CLIENTE ENTRANDO");
+	}else if(all_leaving){
+		printf(" |  >>  CLIENTE SAINDO");
+	}else if (!sitting){
+		printf(" |o/  ||  CLIENTE ESPERANDO");
+	}else{
+		printf(" |");
+	}
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|          ");
-	choose_position(1,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
-	choose_position(1,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
-	choose_position(1,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
-	( !choose_position(1,E) && client_eating() && !choose_position(1,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
+	if(choose_position(1,E)){
+		printf("@|o/  ||  CLIENTE COMENDO");
+	} else if(choose_position(1,S)){
+		printf(" |  <<  CLIENTE ENTRANDO");
+	}else if(all_leaving){
+		printf(" |  >>  CLIENTE SAINDO");
+	}else if (!sitting){
+		printf(" |o/  ||  CLIENTE ESPERANDO");
+	}else{
+		printf(" |");
+	}
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|          ");
-	choose_position(2,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
-	choose_position(2,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
-	choose_position(2,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
-	( !choose_position(2,E) && client_eating()  && !choose_position(2,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
+	if(choose_position(2,E)){
+		printf("@|o/  ||  CLIENTE COMENDO");
+	} else if(choose_position(2,S)){
+		printf(" |  <<  CLIENTE ENTRANDO");
+	}else if(all_leaving){
+		printf(" |  >>  CLIENTE SAINDO");
+	}else if (!sitting){
+		printf(" |o/  ||  CLIENTE ESPERANDO");
+	}else{
+		printf(" |");
+	}
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|          ");
-	choose_position(3,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
-	choose_position(3,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
-	choose_position(3,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
-	( !choose_position(3,E) && client_eating()  && !choose_position(3,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
+	if(choose_position(3,E)){
+		printf("@|o/  ||  CLIENTE COMENDO");
+	} else if(choose_position(3,S)){
+		printf(" |  <<  CLIENTE ENTRANDO");
+	}else if(all_leaving){
+		printf(" |  >>  CLIENTE SAINDO");
+	}else if (!sitting){
+		printf(" |o/  ||  CLIENTE ESPERANDO");
+	}else{
+		printf(" |");
+	}
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|          ");
-	choose_position(4,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
-	choose_position(4,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
-	choose_position(4,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
-	( !choose_position(4,E) && client_eating()  && !choose_position(4,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
+	if(choose_position(4,E)){
+		printf("@|o/  ||  CLIENTE COMENDO");
+	} else if(choose_position(4,S)){
+		printf(" |  <<  CLIENTE ENTRANDO");
+	}else if(all_leaving	){
+		printf(" |  >>  CLIENTE SAINDO");
+	}else if (!sitting){
+		printf(" |o/  ||  CLIENTE ESPERANDO");
+	}else{
+		printf(" |");
+	}
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|___________|\n\n\n");
