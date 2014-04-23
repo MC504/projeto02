@@ -22,7 +22,7 @@
 #define ANSI_COLOR_CYAN    "\033[22;36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-#define NO_OF_CUSTOMERS 20
+#define NO_OF_CUSTOMERS 5
 #define TIMER 30000
 #define TABLE_SIZE 45
 
@@ -33,7 +33,8 @@ void display_table(int client_id);
 pthread_t customers[NO_OF_CUSTOMERS];
 
 int eating = 0, waiting = 0, sitting = 0, leaving = 0, all_leaving = 0; /*flags de estado*/
-int no_of_chairs, no_of_customers, n_spaces;
+int no_of_customers, n_spaces;
+int no_of_chairs = 5;
 
 sem_t block;
 pthread_mutex_t mutex;
@@ -124,14 +125,6 @@ int main() {
 	}
 
 	srand ( time(NULL) );
-
-	printf("Insira o numero de cadeiras do Sushi Bar (1 a 20): ");
-	scanf(" %d", &no_of_chairs);
-
-	while(no_of_chairs < 1 || no_of_chairs > 20) {
-		printf("Insira um valor válido para o numero de cadeiras do Sushi Bar (1 a 20): ");
-		scanf(" %d", &no_of_chairs);
-	}
 
 	/* calcula o numero de espacos entre cada cliente */
 	n_spaces = TABLE_SIZE/(no_of_chairs+1)-1; 
