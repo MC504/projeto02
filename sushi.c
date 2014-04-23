@@ -3,7 +3,6 @@
 ** Andre Seiji Tamanaha - RA116134
 ** Guilherme Costa Zanelato - RA119494
 ** João Victor Chencci Marques - RA119637
-**
 */
 
 #include <semaphore.h>
@@ -15,7 +14,7 @@
 #include <math.h>
 #include <unistd.h>
 
-#define NO_OF_CUSTOMERS 20 /* numero de threads == clientes*/
+#define NO_OF_CUSTOMERS 20 /* numero de threads == clientes */
 #define TIMER 30000
 
 void insert_client(int client_id);
@@ -25,7 +24,7 @@ void verify_state(int i, int c_sitting);
 
 pthread_t customers[NO_OF_CUSTOMERS];
 
-int eating = 0, waiting = 0, sitting = 0, leaving = 0, all_leaving = 0; /*flags de estado*/
+int eating = 0, waiting = 0, sitting = 0, leaving = 0, all_leaving = 0; /* flags de estado */
 
 sem_t block;
 pthread_mutex_t mutex;
@@ -66,7 +65,7 @@ void* sushi_bar(void* arg) {
 		state[client_id] = S;
 		insert_client(client_id);
 
-		/* Muda estado do cliente para COMENDO */
+		/* muda estado do cliente para COMENDO */
 		state[client_id] = E;
 		display_table(client_id);
 
@@ -109,9 +108,8 @@ int main() {
 	char c;
 	int customer_id[NO_OF_CUSTOMERS];
 
-	int position; //PETER
-	for(position=0; position<NO_OF_CUSTOMERS; position++) {
-		active[position] = 0;
+	for(i=0; i<NO_OF_CUSTOMERS; i++) {
+		active[i] = 0;
 	}
 
 	srand ( time(NULL) );
@@ -122,10 +120,10 @@ int main() {
 		state[i] = W;
 	}
 
-  	/* inicia o mutex */
+  /* inicia o mutex */
 	pthread_mutex_init(&mutex,0);
 
-  	/* inicia o semaphore block */
+  /* inicia o semaphore block */
 	sem_init(&block,0,0);
 
 	/* cria as Threads */
@@ -143,7 +141,7 @@ int main() {
 
 void display_table(int client_id) {
 
-	int j, sitting = 0, eating = 0;
+	int j, sitting = 0, eating = 0, leaving=0;
 
 	system("clear"); /* limpa a tela */
 
@@ -165,8 +163,8 @@ void display_table(int client_id) {
 			leaving = 1;
 	}
 
-	/* imprime mesa do sushibar */
-	printf("\n\nMC504 - Projeto 02 - Sushi\n\n");
+	/* imprime mesa  */
+	printf("\nMC504 - Projeto 02 - Sushi\n\n");
 
 	printf("CLIENTES NA FILA: %d\n\n", waiting);
 
@@ -186,12 +184,11 @@ void display_table(int client_id) {
 	printf("	|___________|\n\n\n");
 }
 
-/*imprime clientes entrando*/
+/* imprime clientes entrando */
 void insert_client(int client_id) {
 	int i;  
 
 	if(eating == 1) {
-
 		for(i=0; i<NO_OF_CUSTOMERS; i++) {
 			usleep(TIMER);
 			display_table(client_id); 
@@ -199,7 +196,6 @@ void insert_client(int client_id) {
 		active[client_id] = 1;
 	}
 	else {
-		
 		for(i=0; i<(NO_OF_CUSTOMERS); i++) {
 			usleep(TIMER);
 			display_table(client_id); 
@@ -208,6 +204,7 @@ void insert_client(int client_id) {
 	}
 }
 
+/* imprime clientes saindo */
 void remove_client(int client_id) {
 
 	int i, n_clients = 0;
@@ -245,6 +242,7 @@ void remove_client(int client_id) {
 	}
 }
 
+/* verifica estado do cliente */
 void verify_state(int i, int c_sitting) {
 	if(state[i]==E || state[i+5]==E || state[i+10]==E || state[i+15]==E){
 		printf("@|o/  ||  CLIENTE COMENDO");
