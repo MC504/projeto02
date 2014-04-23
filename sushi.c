@@ -66,7 +66,9 @@ void* sushi_bar(void* arg) {
 
 		/* muda o estado do cliente para SITTING */
 		state[client_id] = S;
-		insert_client(client_id);
+		// insert_client(client_id);
+		usleep(TIMER);
+		display_table(client_id);
 
 		/* Muda estado do cliente para COMENDO */
 		state[client_id] = E;
