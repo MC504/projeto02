@@ -1,4 +1,4 @@
-/*SUSHI BAR
+/* MC504 - 1s2014 - Projeto 02 - Sushi
 **
 ** Andre Seiji Tamanaha - RA116134
 ** Guilherme Costa Zanelato - RA119494
@@ -15,26 +15,17 @@
 #include <math.h>
 #include <unistd.h>
 
-#define ANSI_COLOR_RED     "\033[22;31m"
-#define ANSI_COLOR_GREEN   "\033[22;32m"
-#define ANSI_COLOR_YELLOW  "\033[01;33m"
-#define ANSI_COLOR_BLUE    "\033[22;34m"
-#define ANSI_COLOR_MAGENTA "\033[22;35m"
-#define ANSI_COLOR_CYAN    "\033[22;36m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
-
-#define NO_OF_CUSTOMERS 5
+#define NO_OF_CUSTOMERS 20
 #define TIMER 30000
-#define TABLE_SIZE 45
 
-void insert_sushibar(int client_id);
+void insert_client(int client_id);
 void remove_client(int client_id);
 void display_table(int client_id);
 
 pthread_t customers[NO_OF_CUSTOMERS];
 
 int eating = 0, waiting = 0, sitting = 0, leaving = 0, all_leaving = 0; /*flags de estado*/
-int no_of_customers, n_spaces;
+int no_of_customers, n_spaces; //PETER
 
 sem_t block;
 pthread_mutex_t mutex;
@@ -45,7 +36,7 @@ int must_wait = 0;
 typedef enum {W, S, E, L, O} state_t;
 state_t state[NO_OF_CUSTOMERS];
 
-int spot[NO_OF_CUSTOMERS]; /*vetor de spot x dos clientes/sushis*/
+int spot[NO_OF_CUSTOMERS]; /*vetor de spot x dos clientes/sushis*/ //PETER
 
 
 void* sushi_bar(void* arg) { 
@@ -73,7 +64,7 @@ void* sushi_bar(void* arg) {
 
 		/* muda o estado do cliente para SITTING */
 		state[client_id] = S;
-		insert_sushibar(client_id);
+		insert_client(client_id);
 
 		/* Muda estado do cliente para COMENDO */
 		state[client_id] = E;
@@ -118,7 +109,7 @@ int main() {
 	char c;
 	int customer_id[NO_OF_CUSTOMERS];
 
-	int position;
+	int position; //PETER
 	for(position=0; position<NO_OF_CUSTOMERS; position++) {
 		spot[position] = 0;
 	}
@@ -126,7 +117,7 @@ int main() {
 	srand ( time(NULL) );
 
 	/* calcula o numero de espacos entre cada cliente */
-	n_spaces = TABLE_SIZE/(6)-1; 
+	n_spaces = 45/(6)-1; //PETER
 
 	/* inicia o id dos clientes e os estados como WAITING */
 	for(i=0;i<NO_OF_CUSTOMERS;i++) {
@@ -157,14 +148,14 @@ void remove_client(int client_id) {
 	int i, n_clients = 0;
 
 	for(i=0; i<NO_OF_CUSTOMERS; i++) {
-		if(spot[i] != 0)
+		if(spot[i] != 0) //PETER
 			n_clients++;
 	}
 
 	if(n_clients != 5) {
 		for(i=0; i<NO_OF_CUSTOMERS; i++) {
 			if(state[i] == L) {
-				spot[i] = 0;
+				spot[i] = 0; //PETER
 				leaving--;
 			}
 		}
@@ -183,13 +174,13 @@ void remove_client(int client_id) {
 					printf(" ");
 				}
 
-				for(index=1; index<=TABLE_SIZE; index++){
+				for(index=1; index<=45; index++){
 					for(j=0; j<NO_OF_CUSTOMERS; j++) {
-						if((spot[j]-10) == index) {
+						if((spot[j]-10) == index) { //PETER
 							printf("S");
 							found = 1;
 							if(k>=10) {
-								spot[j]--; 	/* decrementa a posicao do cliente */
+								spot[j]--; 	/* decrementa a posicao do cliente */ //PETER
 							}
 						}
 					}
@@ -202,6 +193,7 @@ void remove_client(int client_id) {
 			}
 
 			all_leaving = 0;
+
 			leaving = 0;
 			int position;
 			for(position=0; position<NO_OF_CUSTOMERS; position++) {
@@ -212,29 +204,10 @@ void remove_client(int client_id) {
 }
 
 void display_table(int client_id) {
+
 	int i, j, found = 0, sitting = 0, eating = 0, leaving = 0;
-	system("clear");
-	/*imprime mesa do sushibar*/
-	printf("\n\nSUSHI BAR\n\n");
 
-	printf("CLIENTES NA FILA : %d\n\n", waiting);
-
-	printf("STATUS CLIENTES: \n\n");
-
-	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|           |\n");
-	printf("	|___________|\n\n\n");
+	system("clear"); /* limpa a tela */
 
 	/* checa quantidade comendo */
 	for(j=0; j<NO_OF_CUSTOMERS; j++) {
@@ -254,13 +227,49 @@ void display_table(int client_id) {
 			leaving = 1;
 	}
 
+	/* imprime mesa do sushibar */
+	printf("\n\nMC504 - Projeto 02 - Sushi\n\n");
+
+	printf("CLIENTES NA FILA: %d\n\n", waiting);
+
+	printf("STATUS CLIENTES: ");
+
+	if(eating == 5) {
+		printf("A MESA ESTA CHEIA\n");
+	}
+	else if(all_leaving) {
+		printf("CLIENTES SAINDO\n");	
+	}
+	else if(sitting) {
+		printf("CLIENTES ENTRANDO\n");	
+	}
+	else
+		printf("\n\n");
+
+	printf("CLIENT_ID: %d", client_id);
+
+	printf("\n\n");
+
+	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
+	printf("	|          "); state[0]==E || state[5]==E || state[10]==E || state[15]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|           |\n");
+	printf("	|          "); state[1]==E || state[6]==E || state[11]==E || state[16]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|           |\n");
+	printf("	|          "); state[2]==E || state[7]==E || state[12]==E || state[17]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|           |\n");
+	printf("	|          "); state[3]==E || state[8]==E || state[13]==E || state[18]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|           |\n");
+	printf("	|          "); state[4]==E || state[9]==E || state[14]==E || state[19]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|           |\n");
+	printf("	|___________|\n\n\n");
+
 	printf("         |");
 	
 	/*imprime sushi caso cliente esteja comendo*/
 	for(i=1; i<=45; i++){
 		for(j=0; j<NO_OF_CUSTOMERS; j++) {
 			if(state[j]==E && (spot[j]-10) == i) {
-				printf(ANSI_COLOR_GREEN"@"ANSI_COLOR_RESET);
+				printf("@");
 				found = 1;
 			}
 		}
@@ -270,19 +279,6 @@ void display_table(int client_id) {
 	}
 
 	printf("|");
-
-	/*imprime estados da execucao do programa*/
-	if(eating == 5) {
-		printf("    :: MESA CHEIA ::\n");
-	}
-	else if(all_leaving) {
-		printf("  <== CLIENTES SAINDO\n");	
-	}
-	else if(sitting) {
-		printf("  [CLIENTES ENTRANDO]\n");	
-	}
-	else
-		printf("\n");
 
 	/*imprime clientes que estao comendo*/
 	if(!sitting && !leaving) {
@@ -324,7 +320,7 @@ void display_table(int client_id) {
 }
 
 /*imprime clientes entrando*/
-void insert_sushibar(int client_id) {
+void insert_client(int client_id) {
 	int i, j, k;      
 
 	if(eating == 1) {
