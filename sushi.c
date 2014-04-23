@@ -1,7 +1,8 @@
 /*SUSHI BAR
 **
-** Andre Nogueira Brandao - RA116130
 ** Andre Seiji Tamanaha - RA116134
+** Guilherme Costa Zanelato - RA119494
+** João Victor Chencci Marques - RA119637
 **
 */
 
@@ -34,7 +35,6 @@ pthread_t customers[NO_OF_CUSTOMERS];
 
 int eating = 0, waiting = 0, sitting = 0, leaving = 0, all_leaving = 0; /*flags de estado*/
 int no_of_customers, n_spaces;
-int no_of_chairs = 5;
 
 sem_t block;
 pthread_mutex_t mutex;
@@ -70,7 +70,7 @@ void* sushi_bar(void* arg) {
 			waiting -= 1;
 		} 
 		eating+=1;
-		must_wait = (eating == no_of_chairs);
+		must_wait = (eating == 5);
 
 		/* muda o estado do cliente para SITTING */
 		state[client_id] = S;
@@ -127,7 +127,7 @@ int main() {
 	srand ( time(NULL) );
 
 	/* calcula o numero de espacos entre cada cliente */
-	n_spaces = TABLE_SIZE/(no_of_chairs+1)-1; 
+	n_spaces = TABLE_SIZE/(6)-1; 
 
 	/* inicia o id dos clientes e os estados como WAITING */
 	for(i=0;i<NO_OF_CUSTOMERS;i++) {
@@ -162,7 +162,7 @@ void remove_client(int client_id) {
 			n_clients++;
 	}
 
-	if(n_clients != no_of_chairs) {
+	if(n_clients != 5) {
 		for(i=0; i<NO_OF_CUSTOMERS; i++) {
 			if(state[i] == L) {
 				spot[i] = 0;
@@ -171,7 +171,7 @@ void remove_client(int client_id) {
 		}
 	}
 	else {
-		if(leaving == no_of_chairs) {
+		if(leaving == 5) {
 			all_leaving = 1;
 
 			int index, j, k, p, found=0;
@@ -216,6 +216,7 @@ void display_table(int client_id) {
 	int i, j, found = 0, sitting = 0, eating = 0, leaving = 0;
 	system("clear");
 	/*imprime mesa do sushibar*/
+<<<<<<< HEAD
 	printf("\n\nSUSHI BAR\n\n");
 
 	printf("CLIENTES NA FILA : %d\n\n", waiting);
@@ -273,7 +274,7 @@ void display_table(int client_id) {
 	printf("|");
 
 	/*imprime estados da execucao do programa*/
-	if(eating == no_of_chairs) {
+	if(eating == 5) {
 		printf("    :: MESA CHEIA ::\n");
 	}
 	else if(all_leaving) {
@@ -318,7 +319,7 @@ void display_table(int client_id) {
 		printf("\n");
 	}
 
-	if(eating == no_of_chairs) {
+	if(eating == 5) {
 		usleep(100000);
 	}
 
