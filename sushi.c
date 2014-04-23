@@ -216,32 +216,26 @@ void display_table(int client_id) {
 	int i, j, found = 0, sitting = 0, eating = 0, leaving = 0;
 	system("clear");
 	/*imprime mesa do sushibar*/
-	printf("\n\n");
-	printf("                          ___________\n");
-	printf("                         | SUSHI BAR |\n"); 
-	printf("                          ‾‾‾‾‾‾‾‾‾‾‾\n");                                        
-	printf("\n");
-	printf("                漢"ANSI_COLOR_RED"o"ANSI_COLOR_RESET"字         漢"ANSI_COLOR_RED"o"ANSI_COLOR_RESET"字          漢"ANSI_COLOR_RED"o"ANSI_COLOR_RESET"字         \n");                                            
-	printf("         |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|");
+	printf("\n\nSUSHI BAR\n\n");
 
-	printf("   CLIENTES ESPERANDO\n");
+	printf("CLIENTES NA FILA : %d\n\n", waiting);
 
-	printf("         |        "ANSI_COLOR_YELLOW"_______"ANSI_COLOR_RESET"            "ANSI_COLOR_YELLOW"_______"ANSI_COLOR_RESET"           |");   
-	
-	printf("        |‾‾‾‾‾‾|\n");
+	printf("STATUS CLIENTES: \n\n");
 
-	printf("         |     "ANSI_COLOR_YELLOW"-<|"ANSI_COLOR_GREEN"@@@@@@@"ANSI_COLOR_YELLOW"|"ANSI_COLOR_GREEN"@"ANSI_COLOR_YELLOW"|"ANSI_COLOR_RESET"      "ANSI_COLOR_YELLOW"-<|"ANSI_COLOR_GREEN"@@@@@@@"ANSI_COLOR_YELLOW"|"ANSI_COLOR_GREEN"@"ANSI_COLOR_YELLOW"|"ANSI_COLOR_RESET"        |");
-
-	printf("        |  %d  ", waiting);
-	if(waiting < 10)
-		printf(" ");
-	printf("|\n");
-
-	printf("         |     "ANSI_COLOR_YELLOW"-<|"ANSI_COLOR_GREEN"@@@@@@@"ANSI_COLOR_YELLOW"|"ANSI_COLOR_GREEN"@"ANSI_COLOR_YELLOW"|"ANSI_COLOR_RESET"      "ANSI_COLOR_YELLOW"-<|"ANSI_COLOR_GREEN"@@@@@@@"ANSI_COLOR_YELLOW"|"ANSI_COLOR_GREEN"@"ANSI_COLOR_YELLOW"|"ANSI_COLOR_RESET"        |");  
-
-	printf("        |______|\n");
-
-	printf("         |        "ANSI_COLOR_YELLOW"‾‾‾‾‾‾‾"ANSI_COLOR_RESET"            "ANSI_COLOR_YELLOW"‾‾‾‾‾‾‾"ANSI_COLOR_RESET"           |\n");   
+	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|           |\n");
+	printf("	|___________|\n\n\n");
 
 	/* checa quantidade comendo */
 	for(j=0; j<NO_OF_CUSTOMERS; j++) {
