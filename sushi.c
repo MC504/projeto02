@@ -23,7 +23,7 @@ void remove_client(int client_id);
 
 void display_table(int client_id);
 int choose_position(int i, int st); 
-int verify_state(int i);
+int verify_state(int i, int c_sitting);
 
 pthread_t customers[NO_OF_CUSTOMERS];
 
@@ -175,15 +175,15 @@ void display_table(int client_id) {
 	printf("\n\n");
 
 	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
-	printf("	|          "); verify_state(0); printf("\n");
+	printf("	|          "); verify_state(0, sitting); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); verify_state(1); printf("\n");
+	printf("	|          "); verify_state(1, sitting); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); verify_state(2); printf("\n");
+	printf("	|          "); verify_state(2, sitting); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); verify_state(3); printf("\n");
+	printf("	|          "); verify_state(3, sitting); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); verify_state(4); printf("\n");
+	printf("	|          "); verify_state(4, sitting); printf("\n");
 	printf("	|           |\n");
 	printf("	|___________|\n\n\n");
 }
@@ -247,14 +247,14 @@ void remove_client(int client_id) {
 	}
 }
 
-int verify_state(int i) {
+int verify_state(int i, int c_sitting) {
 	if(state[i]==E || state[i+5]==E || state[i+10]==E || state[i+15]==E){
 		printf("@|o/  ||  CLIENTE COMENDO");
 	}else if(state[i]==S || state[i+5]==S || state[i+10]==S || state[i+15]==S){
 		printf(" |  <<  CLIENTE ENTRANDO");
 	}else if(all_leaving){
 		printf(" |  >>  CLIENTE SAINDO");
-	}else if (!sitting){
+	}else if (!c_sitting){
 		printf(" |o/  ||  CLIENTE ESPERANDO");
 	}else{
 		printf(" |");
