@@ -23,12 +23,11 @@ void remove_client(int client_id);
 
 void display_table(int client_id);
 int choose_position(int i, int st); 
-int client_eating();
+int verify_state(int i);
 
 pthread_t customers[NO_OF_CUSTOMERS];
 
 int eating = 0, waiting = 0, sitting = 0, leaving = 0, all_leaving = 0; /*flags de estado*/
-int no_of_customers, n_spaces; //PETER
 
 sem_t block;
 pthread_mutex_t mutex;
@@ -119,9 +118,6 @@ int main() {
 
 	srand ( time(NULL) );
 
-	/* calcula o numero de espacos entre cada cliente */
-	n_spaces = 45/(6)-1; //PETER
-
 	/* inicia o id dos clientes e os estados como WAITING */
 	for(i=0;i<NO_OF_CUSTOMERS;i++) {
 		customer_id[i]=i;
@@ -146,6 +142,73 @@ int main() {
 
 	return 0;
 } 
+
+void display_table(int client_id) {
+
+	int i, j, found = 0, sitting = 0, eating = 0, leaving = 0;
+
+	system("clear"); /* limpa a tela */
+
+	/* checa quantidade comendo */
+	for(j=0; j<NO_OF_CUSTOMERS; j++) {
+		if(state[j]==E)
+			eating += 1;
+	}
+
+	/* checa se alguem esta sentando */
+	for(j=0; j<NO_OF_CUSTOMERS; j++) {
+		if(state[j]==S)
+			sitting = 1;
+	}
+
+	/* checa se alguem esta saindo */
+	for(j=0; j<NO_OF_CUSTOMERS; j++) {
+		if(state[j]==L)
+			leaving = 1;
+	}
+
+	/* imprime mesa do sushibar */
+	printf("\n\nMC504 - Projeto 02 - Sushi\n\n");
+
+	printf("CLIENTES NA FILA: %d\n\n", waiting);
+
+	printf("\n\n");
+
+	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
+	printf("	|          "); verify_state(0); printf("\n");
+	printf("	|           |\n");
+	printf("	|          "); verify_state(1); printf("\n");
+	printf("	|           |\n");
+	printf("	|          "); verify_state(2); printf("\n");
+	printf("	|           |\n");
+	printf("	|          "); verify_state(3); printf("\n");
+	printf("	|           |\n");
+	printf("	|          "); verify_state(4); printf("\n");
+	printf("	|           |\n");
+	printf("	|___________|\n\n\n");
+}
+
+/*imprime clientes entrando*/
+void insert_client(int client_id) {
+	int i;  
+
+	if(eating == 1) {
+		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
+		for(i=0; i<NO_OF_CUSTOMERS; i++) {
+			usleep(TIMER);
+			display_table(client_id); 
+		}
+		active[client_id] = 1;
+	}
+	else {
+		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
+		for(i=0; i<(NO_OF_CUSTOMERS); i++) {
+			usleep(TIMER);
+			display_table(client_id); 
+		}
+		active[client_id] = 1;
+	}
+}
 
 void remove_client(int client_id) {
 
@@ -184,42 +247,10 @@ void remove_client(int client_id) {
 	}
 }
 
-void display_table(int client_id) {
-
-	int i, j, found = 0, sitting = 0, eating = 0, leaving = 0;
-
-	system("clear"); /* limpa a tela */
-
-	/* checa quantidade comendo */
-	for(j=0; j<NO_OF_CUSTOMERS; j++) {
-		if(state[j]==E)
-			eating += 1;
-	}
-
-	/* checa se alguem esta sentando */
-	for(j=0; j<NO_OF_CUSTOMERS; j++) {
-		if(state[j]==S)
-			sitting = 1;
-	}
-
-	/* checa se alguem esta saindo */
-	for(j=0; j<NO_OF_CUSTOMERS; j++) {
-		if(state[j]==L)
-			leaving = 1;
-	}
-
-	/* imprime mesa do sushibar */
-	printf("\n\nMC504 - Projeto 02 - Sushi\n\n");
-
-	printf("CLIENTES NA FILA: %d\n\n", waiting);
-
-	printf("\n\n");
-
-	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
-	printf("	|          ");
-	if(choose_position(0,E)){
+int verify_state(int i) {
+	if(state[i]==E || state[i+5]==E || state[i+10]==E || state[i+15]==E){
 		printf("@|o/  ||  CLIENTE COMENDO");
-	}else if(choose_position(0,S)){
+	}else if(state[i]==S || state[i+5]==S || state[i+10]==S || state[i+15]==S){
 		printf(" |  <<  CLIENTE ENTRANDO");
 	}else if(all_leaving){
 		printf(" |  >>  CLIENTE SAINDO");
@@ -228,99 +259,4 @@ void display_table(int client_id) {
 	}else{
 		printf(" |");
 	}
-	printf("\n");
-	printf("	|           |\n");
-	printf("	|          ");
-	if(choose_position(1,E)){
-		printf("@|o/  ||  CLIENTE COMENDO");
-	}else if(choose_position(1,S)){
-		printf(" |  <<  CLIENTE ENTRANDO");
-	}else if(all_leaving){
-		printf(" |  >>  CLIENTE SAINDO");
-	}else if (!sitting){
-		printf(" |o/  ||  CLIENTE ESPERANDO");
-	}else{
-		printf(" |");
-	}
-	printf("\n");
-	printf("	|           |\n");
-	printf("	|          ");
-	if(choose_position(2,E)){
-		printf("@|o/  ||  CLIENTE COMENDO");
-	}else if(choose_position(2,S)){
-		printf(" |  <<  CLIENTE ENTRANDO");
-	}else if(all_leaving){
-		printf(" |  >>  CLIENTE SAINDO");
-	}else if (!sitting){
-		printf(" |o/  ||  CLIENTE ESPERANDO");
-	}else{
-		printf(" |");
-	}
-	printf("\n");
-	printf("	|           |\n");
-	printf("	|          ");
-	if(choose_position(3,E)){
-		printf("@|o/  ||  CLIENTE COMENDO");
-	}else if(choose_position(3,S)){
-		printf(" |  <<  CLIENTE ENTRANDO");
-	}else if(all_leaving){
-		printf(" |  >>  CLIENTE SAINDO");
-	}else if (!sitting){
-		printf(" |o/  ||  CLIENTE ESPERANDO");
-	}else{
-		printf(" |");
-	}
-	printf("\n");
-	printf("	|           |\n");
-	printf("	|          ");
-	if(choose_position(4,E)){
-		printf("@|o/  ||  CLIENTE COMENDO");
-	}else if(choose_position(4,S)){
-		printf(" |  <<  CLIENTE ENTRANDO");
-	}else if(all_leaving	){
-		printf(" |  >>  CLIENTE SAINDO");
-	}else if (!sitting){
-		printf(" |o/  ||  CLIENTE ESPERANDO");
-	}else{
-		printf(" |");
-	}
-	printf("\n");
-	printf("	|           |\n");
-	printf("	|___________|\n\n\n");
-}
-
-/*imprime clientes entrando*/
-void insert_client(int client_id) {
-	int i;  
-
-	if(eating == 1) {
-		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
-		for(i=0; i<NO_OF_CUSTOMERS; i++) {
-			usleep(TIMER);
-			display_table(client_id); 
-		}
-		active[client_id] = 1;
-	}
-	else {
-		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
-		for(i=0; i<(NO_OF_CUSTOMERS); i++) {
-			usleep(TIMER);
-			display_table(client_id); 
-		}
-		active[client_id] = 1;
-	}
-}
-
-int choose_position(int i, int st) {	
-	return (state[i]==st || state[i+5]==st || state[i+10]==st || state[i+15]==st);
-}
-
-int client_eating() {
-	int i;
-	for (i=0; i<20; i++) {
-		if (state[i] == E) {
-			return 1;
-		}
-	}
-	return 0;
 }
