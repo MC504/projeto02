@@ -15,7 +15,7 @@
 #include <math.h>
 #include <unistd.h>
 
-#define NO_OF_CUSTOMERS 20
+#define NO_OF_CUSTOMERS 20 //
 #define TIMER 30000
 
 void insert_client(int client_id);
@@ -233,89 +233,40 @@ void display_table(int client_id) {
 
 	printf("CLIENTES NA FILA: %d\n\n", waiting);
 
-	printf("STATUS CLIENTES: ");
-
-	if(eating == 5) {
-		printf("A MESA ESTA CHEIA\n");
-		printf("\n\n %d \n\n", client_id); //TIRAR ESSA MERDA
-	}
-	else if(all_leaving) {
-		printf("CLIENTES SAINDO\n");
-		printf("\n\n %d \n\n", client_id); //TIRAR ESSA MERDA
-	}
-	else if(sitting) {
-		printf("CLIENTES ENTRANDO\n");
-		printf("\n\n %d \n\n", client_id); //TIRAR ESSA MERDA	
-	}
-	else
-		printf("\n\n");
+	printf("\n\n");
 
 	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
-	printf("	|          "); choose_position(0,E) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          ");
+	choose_position(0,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
+	choose_position(0,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
+	choose_position(0,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(1,E) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          ");
+	choose_position(1,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
+	choose_position(1,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
+	choose_position(1,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(2,E) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          ");
+	choose_position(2,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
+	choose_position(2,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
+	choose_position(2,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(3,E) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          ");
+	choose_position(3,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
+	choose_position(3,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
+	choose_position(3,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(4,E) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          ");
+	choose_position(4,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
+	choose_position(4,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
+	choose_position(4,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	printf("\n");
 	printf("	|           |\n");
 	printf("	|___________|\n\n\n");
-
-	printf("         |");
-	
-	/*imprime sushi caso cliente esteja comendo*/
-	for(i=1; i<=45; i++){
-		for(j=0; j<NO_OF_CUSTOMERS; j++) {
-			if(state[j]==E && (spot[j]-10) == i) {
-				printf("@");
-				found = 1;
-			}
-		}
-		if(!found)
-			printf("_");
-		found=0;
-	}
-
-	printf("|");
-
-	/*imprime clientes que estao comendo*/
-	if(!sitting && !leaving) {
-		printf("          ");
-		for(i=1; i<=45; i++){
-			for(j=0; j<NO_OF_CUSTOMERS; j++) {
-				if((spot[j]-10) == i) {
-					printf("C");
-					found = 1;
-				}
-			}
-			if(!found)
-				printf(" ");
-			found=0;
-		}
-		printf("\n");
-	}
-
-	if(leaving && !all_leaving) {
-		printf("          ");
-		for(i=1; i<=45; i++){
-			for(j=0; j<NO_OF_CUSTOMERS; j++) {
-				if((spot[j]-10) == i) {
-					printf("C");
-					found = 1;
-				}
-			}
-			if(!found)
-				printf(" ");
-			found=0;
-		}
-		printf("\n");
-	}
-
-	if(eating == 5) {
-		usleep(100000);
-	}
 
 }
 
