@@ -15,11 +15,12 @@
 #include <math.h>
 #include <unistd.h>
 
-#define NO_OF_CUSTOMERS 20 //
+#define NO_OF_CUSTOMERS 20 /* numero de threads == clientes*/
 #define TIMER 30000
 
 void insert_client(int client_id);
 void remove_client(int client_id);
+
 void display_table(int client_id);
 int choose_position(int i, int st); 
 int client_eating();
@@ -38,7 +39,7 @@ int must_wait = 0;
 typedef enum {W, S, E, L, O} state_t;
 state_t state[NO_OF_CUSTOMERS];
 
-int spot[NO_OF_CUSTOMERS]; /*vetor de spot x dos clientes/sushis*/ //PETER
+int active[NO_OF_CUSTOMERS]; /*vetor de active x dos clientes/sushis*/ //PETER
 
 
 void* sushi_bar(void* arg) { 
@@ -113,7 +114,7 @@ int main() {
 
 	int position; //PETER
 	for(position=0; position<NO_OF_CUSTOMERS; position++) {
-		spot[position] = 0;
+		active[position] = 0;
 	}
 
 	srand ( time(NULL) );
@@ -147,17 +148,18 @@ int main() {
 } 
 
 void remove_client(int client_id) {
+
 	int i, n_clients = 0;
 
 	for(i=0; i<NO_OF_CUSTOMERS; i++) {
-		if(spot[i] != 0) //PETER
+		if(active[i] != 0)
 			n_clients++;
 	}
 
 	if(n_clients != 5) {
 		for(i=0; i<NO_OF_CUSTOMERS; i++) {
 			if(state[i] == L) {
-				spot[i] = 0; //PETER
+				active[i] = 0;
 				leaving--;
 			}
 		}
@@ -166,40 +168,17 @@ void remove_client(int client_id) {
 		if(leaving == 5) {
 			all_leaving = 1;
 
-			int index, j, k, p, found=0;
-
-			for(k=0; k < (leaving*(n_spaces+1) + 9); k++) {
+			for(i=0; i<NO_OF_CUSTOMERS; i++) {
 				usleep(TIMER);
 				display_table(client_id);
-
-				for(p=k; p<10; p++) {
-					printf(" ");
-				}
-
-				for(index=1; index<=45; index++){
-					for(j=0; j<NO_OF_CUSTOMERS; j++) {
-						if((spot[j]-10) == index) { //PETER
-							printf("S");
-							found = 1;
-							if(k>=10) {
-								spot[j]--; 	/* decrementa a posicao do cliente */ //PETER
-							}
-						}
-					}
-					if(!found) {
-						printf(" ");
-					}
-					found=0;
-				}
-				printf("\n");
 			}
 
 			all_leaving = 0;
 
 			leaving = 0;
-			int position;
-			for(position=0; position<NO_OF_CUSTOMERS; position++) {
-				spot[position] = 0;
+
+			for(i=0; i<NO_OF_CUSTOMERS; i++) {
+				active[i] = 0;
 			}
 		}
 	}
@@ -240,7 +219,7 @@ void display_table(int client_id) {
 	printf("	|          ");
 	if(choose_position(0,E)){
 		printf("@|o/  ||  CLIENTE COMENDO");
-	} else if(choose_position(0,S)){
+	}else if(choose_position(0,S)){
 		printf(" |  <<  CLIENTE ENTRANDO");
 	}else if(all_leaving){
 		printf(" |  >>  CLIENTE SAINDO");
@@ -254,7 +233,7 @@ void display_table(int client_id) {
 	printf("	|          ");
 	if(choose_position(1,E)){
 		printf("@|o/  ||  CLIENTE COMENDO");
-	} else if(choose_position(1,S)){
+	}else if(choose_position(1,S)){
 		printf(" |  <<  CLIENTE ENTRANDO");
 	}else if(all_leaving){
 		printf(" |  >>  CLIENTE SAINDO");
@@ -268,7 +247,7 @@ void display_table(int client_id) {
 	printf("	|          ");
 	if(choose_position(2,E)){
 		printf("@|o/  ||  CLIENTE COMENDO");
-	} else if(choose_position(2,S)){
+	}else if(choose_position(2,S)){
 		printf(" |  <<  CLIENTE ENTRANDO");
 	}else if(all_leaving){
 		printf(" |  >>  CLIENTE SAINDO");
@@ -282,7 +261,7 @@ void display_table(int client_id) {
 	printf("	|          ");
 	if(choose_position(3,E)){
 		printf("@|o/  ||  CLIENTE COMENDO");
-	} else if(choose_position(3,S)){
+	}else if(choose_position(3,S)){
 		printf(" |  <<  CLIENTE ENTRANDO");
 	}else if(all_leaving){
 		printf(" |  >>  CLIENTE SAINDO");
@@ -296,7 +275,7 @@ void display_table(int client_id) {
 	printf("	|          ");
 	if(choose_position(4,E)){
 		printf("@|o/  ||  CLIENTE COMENDO");
-	} else if(choose_position(4,S)){
+	}else if(choose_position(4,S)){
 		printf(" |  <<  CLIENTE ENTRANDO");
 	}else if(all_leaving	){
 		printf(" |  >>  CLIENTE SAINDO");
@@ -308,28 +287,27 @@ void display_table(int client_id) {
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|___________|\n\n\n");
-
 }
 
 /*imprime clientes entrando*/
 void insert_client(int client_id) {
-	int i, j, k;      
+	int i;  
 
 	if(eating == 1) {
 		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
-		for(i=0; i<61-n_spaces; i++) {
+		for(i=0; i<NO_OF_CUSTOMERS; i++) {
 			usleep(TIMER);
 			display_table(client_id); 
 		}
-		spot[client_id] = j-i+1;
+		active[client_id] = 1;
 	}
 	else {
 		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
-		for(i=0; i<(71-n_spaces*eating-n_spaces); i++) {
+		for(i=0; i<(NO_OF_CUSTOMERS); i++) {
 			usleep(TIMER);
 			display_table(client_id); 
 		}
-		spot[client_id] = eating*(n_spaces+1) + 9;
+		active[client_id] = 1;
 	}
 }
 
