@@ -21,7 +21,7 @@
 void insert_client(int client_id);
 void remove_client(int client_id);
 void display_table(int client_id);
-int choose_position(int i);
+int choose_position(int i, int st); 
 
 pthread_t customers[NO_OF_CUSTOMERS];
 
@@ -237,29 +237,29 @@ void display_table(int client_id) {
 
 	if(eating == 5) {
 		printf("A MESA ESTA CHEIA\n");
-		printf("\n\n %d \n\n", client_id);
+		printf("\n\n %d \n\n", client_id); //TIRAR ESSA MERDA
 	}
 	else if(all_leaving) {
 		printf("CLIENTES SAINDO\n");
-		printf("\n\n %d \n\n", client_id);	
+		printf("\n\n %d \n\n", client_id); //TIRAR ESSA MERDA
 	}
 	else if(sitting) {
 		printf("CLIENTES ENTRANDO\n");
-		printf("\n\n %d \n\n", client_id);	
+		printf("\n\n %d \n\n", client_id); //TIRAR ESSA MERDA	
 	}
 	else
 		printf("\n\n");
 
 	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
-	printf("	|          "); choose_position(0) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          "); choose_position(0,E) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(1) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          "); choose_position(1,E) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(2) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          "); choose_position(2,E) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(3) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          "); choose_position(3,E) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(4) ? printf("@|o/") : printf(" |  "); printf("\n");
+	printf("	|          "); choose_position(4,E) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
 	printf("	|___________|\n\n\n");
 
@@ -367,6 +367,6 @@ void insert_client(int client_id) {
 	}
 }
 
-int choose_position(int i) {	
-	return (state[i]==E || state[i+5]==E || state[i+10]==E || state[i+15]==E);
+int choose_position(int i, int st) {	
+	return (state[i]==st || state[i+5]==st || state[i+10]==st || state[i+15]==st);
 }
