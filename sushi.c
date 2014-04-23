@@ -52,7 +52,6 @@ void* sushi_bar(void* arg) {
 	int client_id = *(int *) arg;
 
 	while(1){
-		int i, n;
 
 		pthread_mutex_lock(&mutex);
 
@@ -216,7 +215,6 @@ void display_table(int client_id) {
 	int i, j, found = 0, sitting = 0, eating = 0, leaving = 0;
 	system("clear");
 	/*imprime mesa do sushibar*/
-<<<<<<< HEAD
 	printf("\n\nSUSHI BAR\n\n");
 
 	printf("CLIENTES NA FILA : %d\n\n", waiting);
