@@ -21,6 +21,7 @@
 void insert_client(int client_id);
 void remove_client(int client_id);
 void display_table(int client_id);
+int choose_position(int i);
 
 pthread_t customers[NO_OF_CUSTOMERS];
 
@@ -236,30 +237,29 @@ void display_table(int client_id) {
 
 	if(eating == 5) {
 		printf("A MESA ESTA CHEIA\n");
+		printf("\n\n %d \n\n", client_id);
 	}
 	else if(all_leaving) {
-		printf("CLIENTES SAINDO\n");	
+		printf("CLIENTES SAINDO\n");
+		printf("\n\n %d \n\n", client_id);	
 	}
 	else if(sitting) {
-		printf("CLIENTES ENTRANDO\n");	
+		printf("CLIENTES ENTRANDO\n");
+		printf("\n\n %d \n\n", client_id);	
 	}
 	else
 		printf("\n\n");
 
-	printf("CLIENT_ID: %d", client_id);
-
-	printf("\n\n");
-
 	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
-	printf("	|          "); state[0]==E || state[5]==E || state[10]==E || state[15]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(0) ? printf("@") : printf(" "); printf("|"); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); state[1]==E || state[6]==E || state[11]==E || state[16]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(1) ? printf("@") : printf(" "); printf("|"); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); state[2]==E || state[7]==E || state[12]==E || state[17]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(2) ? printf("@") : printf(" "); printf("|"); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); state[3]==E || state[8]==E || state[13]==E || state[18]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(3) ? printf("@") : printf(" "); printf("|"); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); state[4]==E || state[9]==E || state[14]==E || state[19]==E ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(4) ? printf("@") : printf(" "); printf("|"); printf("\n");
 	printf("	|           |\n");
 	printf("	|___________|\n\n\n");
 
@@ -365,4 +365,8 @@ void insert_client(int client_id) {
 		}
 		spot[client_id] = eating*(n_spaces+1) + 9;
 	}
+}
+
+int choose_position(int i) {	
+	return (state[i]==E || state[i+5]==E || state[i+10]==E || state[i+15]==E);
 }
