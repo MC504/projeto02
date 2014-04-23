@@ -22,6 +22,7 @@ void insert_client(int client_id);
 void remove_client(int client_id);
 void display_table(int client_id);
 int choose_position(int i, int st); 
+int client_eating();
 
 pthread_t customers[NO_OF_CUSTOMERS];
 
@@ -240,30 +241,35 @@ void display_table(int client_id) {
 	choose_position(0,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
 	choose_position(0,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
 	choose_position(0,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	( !choose_position(0,E) && client_eating()  && !choose_position(0,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|          ");
 	choose_position(1,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
 	choose_position(1,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
 	choose_position(1,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	( !choose_position(1,E) && client_eating() && !choose_position(1,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|          ");
 	choose_position(2,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
 	choose_position(2,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
 	choose_position(2,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	( !choose_position(2,E) && client_eating()  && !choose_position(2,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|          ");
 	choose_position(3,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
 	choose_position(3,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
 	choose_position(3,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	( !choose_position(3,E) && client_eating()  && !choose_position(3,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|          ");
 	choose_position(4,E) ? printf("@|o/  ||  CLIENTE COMENDO") : printf(" |  ");
 	choose_position(4,S) ? printf("  <<  CLIENTE ENTRANDO") : printf("");
 	choose_position(4,L) ? printf("  >>  CLIENTE SAINDO") : printf("");
+	( !choose_position(4,E) && client_eating()  && !choose_position(4,W) )? printf(" |o/  ||  CLIENTE ESPERANDO") : printf("");
 	printf("\n");
 	printf("	|           |\n");
 	printf("	|___________|\n\n\n");
@@ -320,4 +326,14 @@ void insert_client(int client_id) {
 
 int choose_position(int i, int st) {	
 	return (state[i]==st || state[i+5]==st || state[i+10]==st || state[i+15]==st);
+}
+
+int client_eating() {
+	int i;
+	for (i=0; i<20; i++) {
+		if (state[i] == E) {
+			return 1;
+		}
+	}
+	return 0;
 }
