@@ -321,6 +321,7 @@ void insert_client(int client_id) {
 			usleep(TIMER);
 			display_table(client_id); 
 		}
+		spot[client_id] = j-i+1;
 	}
 	else {
 		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
@@ -328,6 +329,7 @@ void insert_client(int client_id) {
 			usleep(TIMER);
 			display_table(client_id); 
 		}
+		spot[client_id] = eating*(n_spaces+1) + 9;
 	}
 }
 
