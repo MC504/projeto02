@@ -320,42 +320,14 @@ void insert_client(int client_id) {
 		for(i=0; i<61-n_spaces; i++) {
 			usleep(TIMER);
 			display_table(client_id); 
-
-			/* posicao inicial de entrada (quanto maior, mais longe sai da fila) */
-			for(j=i; j<70; j++) {
-				printf(" ");
-			}
-
-			printf("C\n");
 		}
-		spot[client_id] = j-i+1;
 	}
 	else {
 		/* posicao final do cliente (quanto maior, mais pra esquerda anda) */
 		for(i=0; i<(71-n_spaces*eating-n_spaces); i++) {
 			usleep(TIMER);
 			display_table(client_id); 
-
-			/* posicao inicial do primeiro */
-			for(j=(61-n_spaces); j<70; j++) {
-				printf(" ");
-			}
-			printf("C");
-
-			for(j=2; j<eating; j++) {
-				for(k=0; k<n_spaces; k++) {
-					printf(" ");
-				}
-				printf("C");
-			}
-			/* posicao inicial de entrada (quanto maior, mais longe sai da fila) */
-			for(j=i; j<(70-eating*n_spaces); j++) {
-				printf(" ");
-			}
-
-			printf("C\n");
 		}
-		spot[client_id] = eating*(n_spaces+1) + 9;
 	}
 }
 
