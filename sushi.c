@@ -142,7 +142,7 @@ int main() {
 
 void display_table(int client_id) {
 
-	int j, sitting = 0, eating = 0, leaving=0;
+	int i, sitting = 0, eating = 0, leaving=0;
 
 	system("clear"); /* limpa a tela */
 
