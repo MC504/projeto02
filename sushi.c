@@ -251,15 +251,15 @@ void display_table(int client_id) {
 		printf("\n\n");
 
 	printf("	|‾‾‾‾‾‾‾‾‾‾‾|\n");
-	printf("	|          "); choose_position(0) ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(0) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(1) ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(1) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(2) ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(2) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(3) ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(3) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
-	printf("	|          "); choose_position(4) ? printf("@") : printf(" "); printf("|"); printf("\n");
+	printf("	|          "); choose_position(4) ? printf("@|o/") : printf(" |  "); printf("\n");
 	printf("	|           |\n");
 	printf("	|___________|\n\n\n");
 
