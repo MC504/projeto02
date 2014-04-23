@@ -28,7 +28,6 @@ int client_eating();
 pthread_t customers[NO_OF_CUSTOMERS];
 
 int eating = 0, waiting = 0, sitting = 0, leaving = 0, all_leaving = 0; /*flags de estado*/
-int no_of_customers, n_spaces; //PETER
 
 sem_t block;
 pthread_mutex_t mutex;
@@ -119,9 +118,6 @@ int main() {
 
 	srand ( time(NULL) );
 
-	/* calcula o numero de espacos entre cada cliente */
-	n_spaces = 45/(6)-1; //PETER
-
 	/* inicia o id dos clientes e os estados como WAITING */
 	for(i=0;i<NO_OF_CUSTOMERS;i++) {
 		customer_id[i]=i;
@@ -145,66 +141,29 @@ int main() {
 	};
 
 	return 0;
-} 
-
-void remove_client(int client_id) {
-
-	int i, n_clients = 0;
-
-	for(i=0; i<NO_OF_CUSTOMERS; i++) {
-		if(active[i] != 0)
-			n_clients++;
-	}
-
-	if(n_clients != 5) {
-		for(i=0; i<NO_OF_CUSTOMERS; i++) {
-			if(state[i] == L) {
-				active[i] = 0;
-				leaving--;
-			}
-		}
-	}
-	else {
-		if(leaving == 5) {
-			all_leaving = 1;
-
-			for(i=0; i<NO_OF_CUSTOMERS; i++) {
-				usleep(TIMER);
-				display_table(client_id);
-			}
-
-			all_leaving = 0;
-
-			leaving = 0;
-
-			for(i=0; i<NO_OF_CUSTOMERS; i++) {
-				active[i] = 0;
-			}
-		}
-	}
 }
 
 void display_table(int client_id) {
 
-	int i, j, found = 0, sitting = 0, eating = 0, leaving = 0;
+	int i, sitting=0, eating = 0, leaving = 0;
 
 	system("clear"); /* limpa a tela */
 
 	/* checa quantidade comendo */
-	for(j=0; j<NO_OF_CUSTOMERS; j++) {
-		if(state[j]==E)
+	for(i=0; i<NO_OF_CUSTOMERS; i++) {
+		if(state[i]==E)
 			eating += 1;
 	}
 
 	/* checa se alguem esta sentando */
-	for(j=0; j<NO_OF_CUSTOMERS; j++) {
-		if(state[j]==S)
+	for(i=0; i<NO_OF_CUSTOMERS; i++) {
+		if(state[i]==S)
 			sitting = 1;
 	}
 
 	/* checa se alguem esta saindo */
-	for(j=0; j<NO_OF_CUSTOMERS; j++) {
-		if(state[j]==L)
+	for(i=0; i<NO_OF_CUSTOMERS; i++) {
+		if(state[i]==L)
 			leaving = 1;
 	}
 
@@ -308,6 +267,43 @@ void insert_client(int client_id) {
 			display_table(client_id); 
 		}
 		active[client_id] = 1;
+	}
+}
+
+void remove_client(int client_id) {
+
+	int i, n_clients = 0;
+
+	for(i=0; i<NO_OF_CUSTOMERS; i++) {
+		if(active[i] != 0)
+			n_clients++;
+	}
+
+	if(n_clients != 5) {
+		for(i=0; i<NO_OF_CUSTOMERS; i++) {
+			if(state[i] == L) {
+				active[i] = 0;
+				leaving--;
+			}
+		}
+	}
+	else {
+		if(leaving == 5) {
+			all_leaving = 1;
+
+			for(i=0; i<NO_OF_CUSTOMERS; i++) {
+				usleep(TIMER);
+				display_table(client_id);
+			}
+
+			all_leaving = 0;
+
+			leaving = 0;
+
+			for(i=0; i<NO_OF_CUSTOMERS; i++) {
+				active[i] = 0;
+			}
+		}
 	}
 }
 
